@@ -4,7 +4,7 @@ import Card from "./Card";
 import Tv from "../assets/tv.svg";
 import Icon from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
-import Menu from "../assets/menu.svg";
+import Menu from "../assets/Menu.svg";
 import Imndb from "../assets/imndb.svg";
 import Pngitem from "../assets/Pngitem.svg";
 import Play from "../assets/Play.svg";
@@ -25,7 +25,7 @@ export default function Home() {
                 fetch(API_URL)
                         .then((res) => res.json())
                         .then((data) => {
-                                console.log(data)
+                                // console.log(data)
                                 setMovies(data.results);
                                 // Choose a random movie from the results
                                 const randomIndex = Math.floor(Math.random() * data.results.length);

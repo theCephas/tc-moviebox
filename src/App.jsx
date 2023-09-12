@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import MovieBox from "./components/Home";
+// import MovieBox from "./components/Home";
 function App() {
   
 
@@ -8,7 +8,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies/:id" component={MovieBox} />
+        {/* <Route path="/movies/:id" component={MovieBox} /> */}
       </Routes>
     </Router>
   )
