@@ -28,31 +28,7 @@ export default function Card(props) {
                         .join(", ");
         };
 
-        // // Create a function to format the release date
-        // const formatReleaseDate = (dateString) => {
-        //         const date = new Date(dateString);
-        //         const day = date.getDate();
-        //         const month = date.toLocaleDateString(undefined, { month: 'long' });
-        //         const year = date.getFullYear();
-        //         return `Release date: ${day}${getOrdinalSuffix(day)}, ${month} ${year}`;
-        // };
-
-        // // Helper function to get the ordinal suffix (e.g., 1st, 2nd, 3rd)
-        // const getOrdinalSuffix = (day) => {
-        //         if (day >= 11 && day <= 13) {
-        //                 return "th";
-        //         }
-        //         switch (day % 10) {
-        //                 case 1:
-        //                         return "st";
-        //                 case 2:
-        //                         return "nd";
-        //                 case 3:
-        //                         return "rd";
-        //                 default:
-        //                         return "th";
-        //         }
-        // };
+   
 
         // Conditionally render the component when genres are available and poster_path is defined
         if (!genres.length || !props.poster_path) {
