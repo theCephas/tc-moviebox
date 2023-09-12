@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import Card from "./Card";
 import Tv from "../assets/tv.svg";
 import Icon from "@mdi/react";
@@ -15,10 +16,12 @@ import Instagram from "../assets/instagram.svg";
 
 export default function Home() {
         const API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=224a0cd182af5ba726408359fec9692e";
+        // const API_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=224a0cd182af5ba726408&query";
         const [movies, setMovies] = useState([]);
         const [randomMovie, setRandomMovie] = useState(null);
         const [displayedMovies, setDisplayedMovies] = useState(10);
         const [showMore, setShowMore] = useState(false);
+        const [query, setQuery] = useState('');
 
         useEffect(() => {
                 // Fetch the movie data
@@ -44,6 +47,23 @@ export default function Home() {
                 }
         };
 
+        const searchMovie = async(e)=>{
+                e.preventDefault();
+                console.log("Searching...")
+                try {
+                        const url =`https://api.themoviedb.org/3/search/movie?api_key=224a0cd182af5ba726408359fec9692e&query=${query}`
+                        const res = await fetch(url);
+                        const data = await res.json();
+                        console.log(data);
+                        setMovies(data.results)
+                }
+                catch(e){
+                        console.log(e);
+                }
+        }
+        const changeHandler = (e)=>{
+                setQuery(e.target.value)
+        }
         return (
                 <Fragment>
                         <Helmet>
@@ -68,6 +88,7 @@ items-center sm:mx-20 pt-6
 mx-4
 ">
                                         <div className="flex">
+                                                <Link to="/">
                                                 <img src={Tv}
                                                         className="w-[40px] md:mr-20"
                                                         alt="Tv Icon" />
@@ -76,18 +97,25 @@ mx-4
 md:contents text-3xl 
 ">MovieBox</p>
                                                 </div>
+                                                </Link>
+                                                
                                         </div>
-                                        <form action="">
+                                        <form onSubmit={searchMovie}>
                                                 <div className="relative mx-4">
-                                                        <input type="text"
-                                                                value="Hello"
-                                                                className="bg-black/30 sm:w-[25rem] md:w-[28rem] text-white 
+                                                        <input type="search"
+                                                        value={query}
+                                                        name="query"
+                                                        onChange={changeHandler}
+                                                                placeholder="What do you want to watch?"
+                                                                className="bg-black/20 sm:w-[25rem] md:w-[28rem] text-white 
 rounded border p-4"
                                                         />
+                                                        <button type="submit">
                                                         <Icon
                                                                 className="absolute inset-0 top-4 sm:left-[265px]
-text-white md:left-[295px] left-[135px]"
+text-white md:left-[295px] left-[150px]"
                                                                 path={mdiMagnify} size={1} />
+                                                        </button>
                                                 </div>
                                         </form>
                                         <div className="flex text-white">
@@ -195,7 +223,3 @@ hidden md:contents font-bold">Sign in</p>
                 </Fragment>
         );
 }
-
-
-
-
