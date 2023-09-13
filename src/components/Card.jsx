@@ -4,6 +4,7 @@ import Imndb from "../assets/imndb.svg";
 import Pngitem from "../assets/Pngitem.svg";
 import Icon from '@mdi/react';
 import { mdiHeartOutline } from '@mdi/js';
+import { Link } from "react-router-dom";
 
 
 export default function Card(props) {
@@ -11,7 +12,7 @@ export default function Card(props) {
         const [genres, setGenres] = useState([]);
 
         useEffect(() => {
-                // Fetch movie genres from the API
+                
                 fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=224a0cd182af5ba726408359fec9692e")
                         .then((res) => res.json())
                         .then((data) => {
@@ -19,9 +20,8 @@ export default function Card(props) {
                         });
         }, []);
 
-        // Create a function to format the genre list
         const formatGenres = (genreIds) => {
-                if (!genres.length || !genreIds) return ""; // Check if genres and genreIds are available
+                if (!genres.length || !genreIds) return ""; 
                 return genreIds
                         .map((genreId) => {
                                 const genre = genres.find((genre) => genre.id === genreId);
@@ -31,11 +31,8 @@ export default function Card(props) {
                         .join(", ");
         };
 
-
-
-        // Conditionally render the component when genres are available and poster_path is defined
         if (!genres.length || !props.poster_path) {
-                return null; // Return null or a loading component if data is not available
+                return null;
         }
 
         const imageURL = API_IMG + props.poster_path;
@@ -44,7 +41,7 @@ export default function Card(props) {
                 <Fragment>
                         <div className=" card">
                                 <div className="relative">
-                                        <img data-testid="movie-poster" className="w-[100%] rounded-xl" src={imageURL} alt={props.title} />
+                                       <Link to={`/movies/${props.id}`}> <img data-testid="movie-poster" className="w-[100%] rounded-xl" src={imageURL} alt={props.title} /></Link>
                                         <div className="absolute top-7 left-0">
                                                 <span className="bg-white/40 ml-4 mb-[-2px] p-2
                                                 text-sm rounded-full text-black/80 cursor-pointer
@@ -76,6 +73,7 @@ export default function Card(props) {
 }
 
 Card.propTypes = {
+        id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         poster_path: PropTypes.string.isRequired,
         vote_average: PropTypes.string.isRequired,

@@ -17,7 +17,8 @@ import GridLoader from "react-spinners/GridLoader";
 
 export default function Home() {
         const API_URL =
-                "https://api.themoviedb.org/3/discover/movie?api_key=224a0cd182af5ba726408359fec9692e";
+                "https://api.themoviedb.org/3/movie/top_rated?api_key=224a0cd182af5ba726408359fec9692e";
+        const discover = "https://api.themoviedb.org/3/discover/movie?api_key=224a0cd182af5ba726408359fec9692e"
         const [movies, setMovies] = useState([]);
         const [randomMovie, setRandomMovie] = useState(null);
         const [displayedMovies, setDisplayedMovies] = useState(10);
@@ -29,23 +30,39 @@ export default function Home() {
         const [seeMoreLabel, setSeeMoreLabel] = useState("See More");
 
 
-        useEffect(() => {
+        const fetchRandomMovie = () => {
+                fetch(discover)
+                  .then((res) => res.json())
+                  .then((data) => {
+                    const randomIndex = Math.floor(Math.random() * data.results.length);
+                    setRandomMovie(data.results[randomIndex]);
+                    setTimeout(() => {
+                      setLoading(false);
+                    }, 1500);
+                  });
+              };
+            
+              useEffect(() => {
                 fetch(API_URL)
-                        .then((res) => res.json())
-                        .then((data) => {
-                                setMovies(data.results);
-                                console.log(data)
-                                const randomIndex = Math.floor(Math.random() * data.results.length);
-                                setRandomMovie(data.results[randomIndex]);
-                                setTimeout(() => {
-                                        setLoading(false);
-                                }, 5000);
-                        });
-        }, []);
-
+                  .then((res) => res.json())
+                  .then((data) => {
+                    setMovies(data.results);
+                  });
+                
+                fetchRandomMovie();
+        
+                const interval = setInterval(fetchRandomMovie, 5000);
+            
+                return () => {
+                  clearInterval(interval);
+                };
+              }, []);
+  
         useEffect(() => {
                 setSeeMoreLabel("See More");
         }, []);
+
+      
 
         const handleSeeMore = () => {
                 if (showMore) {
@@ -60,18 +77,17 @@ export default function Home() {
         const searchMovie = async (e) => {
                 e.preventDefault();
                 setLoading(true);
-                
+
                 try {
                         const url = `https://api.themoviedb.org/3/search/movie?api_key=224a0cd182af5ba726408359fec9692e&query=${query}`;
                         const res = await fetch(url);
                         const data = await res.json();
-                        console.log(data);
                         setMovies(data.results);
                         setSearched(true);
                         setShowMore(false);
                         setLoading(false);
                 } catch (e) {
-                        
+
                         setLoading(false);
                 }
         };
@@ -92,17 +108,13 @@ export default function Home() {
                         .then((data) => {
                                 setMovies(data.results);
 
-                                const randomIndex = Math.floor(Math.random() * data.results.length);
-                                setRandomMovie(data.results[randomIndex]);
-                                setTimeout(() => {
-                                        setLoading(false);
-                                }, 1500);
+                               
                         });
         };
 
         const formatVoteAverage = (voteAverage) => {
                 return `${Math.round(voteAverage * 10)}/100`;
-              };
+        };
 
         return (
                 <Fragment>
@@ -145,7 +157,7 @@ export default function Home() {
                                                                                         value={query}
                                                                                         name="query"
                                                                                         onChange={changeHandler}
-                                                                                        placeholder="Find a Movie"
+                                                                                        placeholder="Find a movie"
                                                                                         className="bg-black/20 sm:w-[25rem] md:w-[28rem] text-white rounded border p-4 text-sm"
                                                                                 />
                                                                                 <button
@@ -224,6 +236,7 @@ export default function Home() {
                                                                         {movies.slice(0, displayedMovies).map((movieReq) => (
                                                                                 <Card
                                                                                         key={movieReq.id}
+                                                                                        id={movieReq.id.toString()}
                                                                                         poster_path={movieReq.poster_path}
                                                                                         title={movieReq.title}
                                                                                         vote_average={formatVoteAverage(movieReq.vote_average.toString())}
