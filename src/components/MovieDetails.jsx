@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Play from "../assets/Play.svg";
-import Tv from "../assets/Tv.svg";
+import Tv from "../assets/tv.svg";
 import { Link } from "react-router-dom";
 import Headroom from "react-headroom";
 import Facebook from "../assets/facebook.svg";
