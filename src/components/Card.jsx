@@ -2,6 +2,9 @@ import { Fragment, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import Imndb from "../assets/imndb.svg";
 import Pngitem from "../assets/Pngitem.svg";
+import Icon from '@mdi/react';
+import { mdiHeartOutline } from '@mdi/js';
+
 
 export default function Card(props) {
         const API_IMG = "https://image.tmdb.org/t/p/w500/";
@@ -28,7 +31,7 @@ export default function Card(props) {
                         .join(", ");
         };
 
-   
+
 
         // Conditionally render the component when genres are available and poster_path is defined
         if (!genres.length || !props.poster_path) {
@@ -40,9 +43,21 @@ export default function Card(props) {
         return (
                 <Fragment>
                         <div className=" card">
-                                <img className="w-[100%]" src={imageURL} alt={props.title} />
+                                <div className="relative">
+                                        <img data-testid="movie-poster" className="w-[100%] rounded-xl" src={imageURL} alt={props.title} />
+                                        <div className="absolute top-7 left-0">
+                                                <span className="bg-white/40 ml-4 mb-[-2px] p-2
+                                                text-sm rounded-full text-black/80 cursor-pointer
+                                                ">Top Movies</span>
+                                        </div>
+                                        <div className="absolute top-6 right-0">
+                                        <Icon path={mdiHeartOutline} size={1.6} className="right-0 text-white/50 bg-white/40 mr-4 mb-[-2px] p-2
+                                                text-sm rounded-full text-black/80 cursor-pointer" />
+                                        </div>
+                                </div>
+
                                 <p className="text-black/50font-bold py-4 text-[11px]">{formatGenres(props.genre_ids)}</p>
-                                <h1 className="font-bold w-[auto] text-xl pb-6">{props.title}</h1>
+                                <h1 data-testid="movie-title" className="font-bold w-[auto] text-xl pb-6">{props.title}</h1>
                                 <div className="mb-6 flex justify-between w-[auto]">
                                         <div className="flex text-[11px]">
                                                 <img src={Imndb} alt="Imndb" className="" />
@@ -53,7 +68,7 @@ export default function Card(props) {
                                                 <span className="pl-6 ">97%</span>
                                         </div>
                                 </div>
-                                <p className="text-black/60 font-bold text-[11px] pb-6"
+                                <p data-testid="movie-release-date" className="text-black/60 font-bold text-[11px] pb-6"
                                 >Release Date (UTC): {props.release_date}</p>
                         </div>
                 </Fragment>
