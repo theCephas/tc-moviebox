@@ -1,7 +1,5 @@
-API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=224a0cd182af5ba726408359fec9692e"
+### Stage TWO Task - HNG Internship
 
-API_IMG = "
-https://image.tmdb.org/t/p/w500/"
+This is a simple project, using the TMBD Api to generate movies randomly, search for them, know a little info about them and all. Built with react and vite. 
 
-API_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key=224a0cd182af5ba726408&query"
-
+I learnt alot building this project. Have a good feel checking out the project, cheers. 😊🚀

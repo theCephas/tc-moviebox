@@ -43,7 +43,7 @@ export default function Card(props) {
         };
         return (
                 <Fragment>
-                        <div className=" card">
+                        <div className="card" data-testid="movie-card">
                                 <div className="relative">
                                         <Link to={`/movies/${props.id}`}>
                                                 <img data-testid="movie-poster" className="w-[100%] rounded-xl" src={imageURL} alt={props.title} />
@@ -80,8 +80,8 @@ export default function Card(props) {
                                                 <span className="pl-6 ">97%</span>
                                         </div>
                                 </div>
-                                <p data-testid="movie-release-date" className="text-black/60 font-bold text-[11px] pb-6"
-                                >Release Date (UTC): {props.release_date}</p>
+                                <p className="text-black/60 font-bold text-[11px] pb-6"
+                                >Release Date: <span data-testid="movie-release-date"> {props.release_date}</span></p>
 
                         </div>
                 </Fragment>

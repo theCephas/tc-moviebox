@@ -277,7 +277,9 @@ export default function Home() {
                                                         <p>Press Room</p>
                                                 </div>
                                                 <div className="text-center pb-20 font-bold text-sm sm:text-[16px]">
-                                                        <p>&copy; 2023 MovieBox by Osho Iseoluwa</p>
+                                                        <p>&copy; 2023 MovieBox by 
+                                                               <a href="https://github.com/theCephas/tc-moviebox" className="text-red-600"> Osho Iseoluwa</a>
+                                                                </p>
                                                 </div>
                                         </footer>
                                 </>
