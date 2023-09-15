@@ -17,7 +17,9 @@ export default function MovieDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=224a0cd182af5ba726408359fec9692e`)
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=224a0cd182af5ba726408359fec9692e`
+    )
       .then((res) => res.json())
       .then((data) => {
         setMovieDetails(data);
@@ -29,22 +31,22 @@ export default function MovieDetails() {
   }, [id]);
 
   const formatDateToUTC = (dateString) => {
-        if (!dateString) {
-          return ''; // Return an empty string for null or empty date strings
-        }
-      
-        const localDate = new Date(dateString);
-        const utcDate = new Date(
-          Date.UTC(
-            localDate.getUTCFullYear(),
-            localDate.getUTCMonth(),
-            localDate.getUTCDate(),
-            localDate.getUTCHours(),
-            localDate.getUTCMinutes(),
-            localDate.getUTCSeconds(),
-            localDate.getUTCMilliseconds()
-          )
-        );
+    if (!dateString) {
+      return ""; 
+    }
+
+    const localDate = new Date(dateString);
+    const utcDate = new Date(
+      Date.UTC(
+        localDate.getUTCFullYear(),
+        localDate.getUTCMonth(),
+        localDate.getUTCDate(),
+        localDate.getUTCHours(),
+        localDate.getUTCMinutes(),
+        localDate.getUTCSeconds(),
+        localDate.getUTCMilliseconds()
+      )
+    );
 
     // Format the UTC date to the desired string format, e.g., "YYYY-MM-DDTHH:mm:ssZ"
     const formattedDate = utcDate.toUTCString();
@@ -79,7 +81,9 @@ export default function MovieDetails() {
               <Headroom className="bg-black/50">
                 <Link to="/" className="flex justify-center py-3">
                   <img src={Tv} alt="Tv" className="w-[40px]" />
-                  <span className="pt-2 pl-3 text-white font-bold text-2xl">MovieBox</span>
+                  <span className="pt-2 pl-3 text-white font-bold text-2xl">
+                    MovieBox
+                  </span>
                 </Link>
               </Headroom>
               <div className="flex flex-col justify-center items-center pt-[230px] cursor-pointer ">
@@ -89,21 +93,26 @@ export default function MovieDetails() {
             </header>
 
             <div className="flex sm:mx-10 mx-4 pt-6 font-bold">
-              <p data-testid="movie-title" className="text-red-700 pr-4 text-[14px]">
+              <p
+                data-testid="movie-title"
+                className="text-red-700 pr-4 text-[14px]"
+              >
                 {movieDetails.title}
               </p>
               <p>•</p>
-              <span data-testid="movie-release-date" className="pl-4 text-[14px]">
+              <span
+                data-testid="movie-release-date"
+                className="pl-4 text-[14px]"
+              >
                 {formattedReleaseDate}
               </span>
             </div>
-            <p
-              
-              className="py-6 sm:mx-10 mx-4 font-bold text-[14px]"
-            >
+            <p className="py-6 sm:mx-10 mx-4 font-bold text-[14px]">
               Runtime:
               <span data-testid="movie-runtime"> {movieDetails?.runtime}</span>
-              <span className="ml-1 bg-red-500 text-white rounded text-sm p-1">minutes</span>
+              <span className="ml-1 bg-red-500 text-white rounded text-sm p-1">
+                minutes
+              </span>
             </p>
             <p
               data-testid="movie-overview"
@@ -126,7 +135,16 @@ export default function MovieDetails() {
               <p>Press Room</p>
             </div>
             <div className="text-center pb-20 font-bold text-sm sm:text-[16px]">
-              <p>&copy; 2023 MovieBox by Osho Iseoluwa</p>
+              <p>
+                &copy; 2023 MovieBox by
+                <a
+                  href="https://github.com/theCephas/tc-moviebox"
+                  className="text-red-600"
+                >
+                  {" "}
+                  Osho Iseoluwa
+                </a>
+              </p>
             </div>
           </footer>
         </>
